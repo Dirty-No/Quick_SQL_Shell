@@ -18,6 +18,11 @@ server
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
 
+        location / {
+            root /usr/share/nginx/html;
+            autoindex on;
+        }
+
         location /postgres/ {            
             proxy_pass http://butterfly:8881/postgres/;
         }

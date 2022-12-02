@@ -51,6 +51,7 @@ services:
         image: nginx
         volumes:
             - ./proxy/templates:/etc/nginx/templates
+            - ./proxy/content:/usr/share/nginx/html:ro
         ports:
             - "8888:80"
         restart: always
