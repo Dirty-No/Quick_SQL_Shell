@@ -1,5 +1,3 @@
-# Docker compose for postgres and pgadmin
-
 version: "3.5"
 services:
     postgres:
