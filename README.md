@@ -19,3 +19,4 @@ You can configure anything you need by editing docker-compose.yml and proxy/temp
 ### TODO:
 - Network and system sandboxing. 
 	- (Right now this is an entry point to your network, use with approriate security measures)
+- Add default / index page.
