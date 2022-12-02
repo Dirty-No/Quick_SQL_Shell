@@ -1,2 +1,2 @@
-# Quick_SQL_Shell
+# OnlineSQL
 Quickly get a MySQL/Postgres/SQLite shell for testing purposes
