@@ -47,7 +47,7 @@ services:
             export > ~/.bashrc
             butterfly.server.py --uri-root-path=postgres --cmd="bash -il -c psql"  --host=0.0.0.0 --port=8881 --i-hereby-declare-i-dont-want-any-security-whatsoever &
             butterfly.server.py --uri-root-path=mysql --cmd="bash -il -c mysql"  --host=0.0.0.0 --port=8882 --i-hereby-declare-i-dont-want-any-security-whatsoever &
-            butterfly.server.py --uri-root-path=sqlite --cmd="bash -il -c sqlite3"  --host=0.0.0.0 --port=8883 --i-hereby-declare-i-dont-want-any-security-whatsoever
+            sudo -u sqlite butterfly.server.py --uri-root-path=sqlite --cmd="bash -il -c sqlite3"  --host=0.0.0.0 --port=8883 --i-hereby-declare-i-dont-want-any-security-whatsoever
           '
 
     proxy:
