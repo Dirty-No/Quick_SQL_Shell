@@ -1,0 +1,59 @@
+# Docker compose for postgres and pgadmin
+
+version: "3.5"
+services:
+    postgres:
+        image: postgres:latest
+        restart: unless-stopped
+        expose:
+          - 5432
+        environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
+          - POSTGRES_DB=db
+
+    mysql:
+        image: mysql:latest
+        restart: unless-stopped
+        expose:
+          - 3306
+        environment:
+          - MYSQL_ROOT_PASSWORD=mysql
+
+    butterfly:
+        image: our_butterfly
+        build: .
+        restart: unless-stopped
+        ports:
+          - "8881:8881"
+          - "8882:8882"
+        expose:
+          - 8881
+          - 8882
+          - 8883
+        environment:
+          - PGPASSWORD=postgres
+          - PGHOST=postgres
+          - PGPORT=5432
+          - PGUSER=postgres
+          - PGDATABASE=db 
+          - MYSQL_HOST=mysql
+          - MYSQL_PWD=mysql
+          - MYSQL_TCP_PORT=3306
+          - USER=root
+        command: |
+          bash --posix -c '
+            export > ~/.bashrc
+            butterfly.server.py --uri-root-path=postgres --cmd="bash -il -c psql"  --host=0.0.0.0 --port=8881 --i-hereby-declare-i-dont-want-any-security-whatsoever &
+            butterfly.server.py --uri-root-path=mysql --cmd="bash -il -c mysql"  --host=0.0.0.0 --port=8882 --i-hereby-declare-i-dont-want-any-security-whatsoever &
+            butterfly.server.py --uri-root-path=sqlite --cmd="bash -il -c sqlite3"  --host=0.0.0.0 --port=8883 --i-hereby-declare-i-dont-want-any-security-whatsoever
+          '
+
+    proxy:
+        image: nginx
+        volumes:
+            - ./proxy/templates:/etc/nginx/templates
+        ports:
+            - "8888:80"
+        restart: always
+        depends_on: [butterfly]
