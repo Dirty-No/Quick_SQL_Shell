@@ -3,6 +3,8 @@ services:
     postgres:
         image: postgres:latest
         restart: unless-stopped
+        networks:
+          - no-internet 
         expose:
           - 5432
         environment:
@@ -13,6 +15,8 @@ services:
     mysql:
         image: mysql:latest
         restart: unless-stopped
+        networks:
+          - no-internet 
         expose:
           - 3306
         environment:
@@ -22,9 +26,8 @@ services:
         image: our_butterfly
         build: .
         restart: unless-stopped
-        ports:
-          - "8881:8881"
-          - "8882:8882"
+        networks:
+          - no-internet 
         expose:
           - 8881
           - 8882
@@ -55,4 +58,14 @@ services:
         ports:
             - "8888:80"
         restart: always
+        networks:
+          - no-internet 
+          - internet
         depends_on: [butterfly]
+
+networks:
+  no-internet:
+    driver: bridge
+    internal: true
+  internet:
+    driver: bridge
