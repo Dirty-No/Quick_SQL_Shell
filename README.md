@@ -15,7 +15,6 @@ You will be able to access the following routes:
 
 You can configure anything you need by editing docker-compose.yml and proxy/templates/default.conf
 
+## Security:
+Containers are sandboxed using dedicated users and an isolated network.
 
-### TODO:
-- Network and system sandboxing. 
-	- (Right now this is an entry point to your network, use with approriate security measures)
