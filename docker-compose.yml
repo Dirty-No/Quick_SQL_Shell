@@ -36,7 +36,9 @@ services:
       environment:
         - ORACLE_PASSWORD=oracle  # Password for SYS and SYSTEM
         - ORACLE_DATABASE=xe_pdb1  # Name of the new pluggable database
+        
         # Uncomment this and modify butterfly service and init.sh to use a non-system user
+        # WARN: Non system users do not have access to functions like `dbms_pipe.receive_message(('a'),10) ` by default
         # - APP_USER=oracle  # Name of the new database schema user
         # - APP_USER_PASSWORD=oracle  # Password for the new database schema user
 
