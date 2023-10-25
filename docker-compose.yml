@@ -23,7 +23,7 @@ services:
           - MYSQL_ROOT_PASSWORD=mysql
 
     # The oracle database may take longer to start.
-    # $> sqlplus oracle/oracle@oracle:1521/xe_pdb1
+    # $> sqlplus system/oracle@oracle:1521/xe_pdb1
     oracle:
       image: gvenzl/oracle-xe:latest
       restart: unless-stopped
