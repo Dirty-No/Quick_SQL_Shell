@@ -22,6 +22,25 @@ services:
         environment:
           - MYSQL_ROOT_PASSWORD=mysql
 
+    # The oracle database may take longer to start.
+    # $> sqlplus oracle/oracle@oracle:1521/xe_pdb1
+    oracle:
+      image: gvenzl/oracle-xe:latest
+      restart: unless-stopped
+      networks:
+        - no-internet
+      ports: 
+        - "1521:1521"
+      expose:
+        - 1521  # Oracle SQL*Net port
+      environment:
+        - ORACLE_PASSWORD=oracle  # Password for SYS and SYSTEM
+        - ORACLE_DATABASE=xe_pdb1  # Name of the new pluggable database
+        # Uncomment this and modify butterfly service and init.sh to use a non-system user
+        # - APP_USER=oracle  # Name of the new database schema user
+        # - APP_USER_PASSWORD=oracle  # Password for the new database schema user
+
+
     butterfly:
         image: our_butterfly
         build: .
@@ -32,6 +51,7 @@ services:
           - 8881
           - 8882
           - 8883
+          - 8884
         environment:
           - PGPASSWORD=postgres
           - PGHOST=postgres
@@ -42,13 +62,13 @@ services:
           - MYSQL_PWD=mysql
           - MYSQL_TCP_PORT=3306
           - USER=root
-        command: |
-          bash --posix -c '
-            export > ~/.bashrc
-            butterfly.server.py --uri-root-path=postgres --cmd="bash -il -c psql"  --host=0.0.0.0 --port=8881 --i-hereby-declare-i-dont-want-any-security-whatsoever &
-            butterfly.server.py --uri-root-path=mysql --cmd="bash -il -c mysql"  --host=0.0.0.0 --port=8882 --i-hereby-declare-i-dont-want-any-security-whatsoever &
-            sudo -u sqlite butterfly.server.py --uri-root-path=sqlite --cmd="bash -il -c sqlite3"  --host=0.0.0.0 --port=8883 --i-hereby-declare-i-dont-want-any-security-whatsoever
-          '
+          - ORACLE_HOST=oracle
+          - ORACLE_PORT=1521
+          - ORACLE_USER=system
+          # - ORACLE_USER=oracle
+          - ORACLE_PASSWORD=oracle
+          - ORACLE_PDB=xe_pdb1
+
 
     proxy:
         image: nginx

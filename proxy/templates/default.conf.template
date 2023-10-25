@@ -34,4 +34,8 @@ server
         location /sqlite/ {            
             proxy_pass http://butterfly:8883/sqlite/;
         }
+
+        location /oracle/ {            
+            proxy_pass http://butterfly:8884/oracle/;
+        }
 }
