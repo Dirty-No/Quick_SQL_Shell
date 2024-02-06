@@ -11,5 +11,7 @@ sudo -u sqlite butterfly.server.py --uri-root-path=sqlite --cmd="bash -il -c sql
 # Warning: Butterfly seems to handle nested quotes badly, so we use this very dirty trick to avoid them simply.
 # The oracle database may take longer to start.
 # rlwrap allows to have interactive features like history, line editing for non-interactive CLI applications.
-echo >>~/.bashrc 'alias oracle="rlwrap sqlplus $ORACLE_USER/$ORACLE_PASSWORD@$ORACLE_HOST:$ORACLE_PORT/$ORACLE_PDB"'
-butterfly.server.py --uri-root-path=oracle --cmd="bash -il -c oracle" --host=0.0.0.0 --port=8884 --i-hereby-declare-i-dont-want-any-security-whatsoever
+echo 'rlwrap sqlplus $ORACLE_USER/$ORACLE_PASSWORD@$ORACLE_HOST:$ORACLE_PORT/$ORACLE_PDB' > /tmp/oracle-script.sh
+
+# WARN: Oracle takes a lot of time to boot, make sure you have waited long enough before thinking you need to debug something
+butterfly.server.py --uri-root-path=oracle --cmd="bash -il /tmp/oracle-script.sh" --host=0.0.0.0 --port=8884 --i-hereby-declare-i-dont-want-any-security-whatsoever
