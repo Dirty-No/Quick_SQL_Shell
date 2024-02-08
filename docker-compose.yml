@@ -41,6 +41,17 @@ services:
         # - APP_USER=oracle  # Name of the new database schema user
         # - APP_USER_PASSWORD=oracle  # Password for the new database schema user
 
+    mssql:
+      image: mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
+      restart: unless-stopped
+      networks:
+        - no-internet
+      ports:
+        - "1433:1433"
+      environment:
+        - ACCEPT_EULA=Y
+        - MSSQL_SA_PASSWORD=EJAZHEJZAHJEZ2193939219312@@@@dzadazd # Strong password is required, so I smashed my head on the keyboard
+        - MSSQL_PID=Evaluation
 
     butterfly:
         image: our_butterfly
@@ -69,6 +80,9 @@ services:
           # - ORACLE_USER=oracle
           - ORACLE_PASSWORD=oracle
           - ORACLE_PDB=xe_pdb1
+          - MSSQL_HOST=mssql
+          - SA_PASSWORD=EJAZHEJZAHJEZ2193939219312@@@@dzadazd
+
 
 
     proxy:

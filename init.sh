@@ -9,7 +9,7 @@ start_webshell() {
     COMMAND="$3"
 
     # Butterfly seems to be buggy when passing quotes and stuff to --cmd, so the best way to bypass this issue
-    # is to write the command in a temporary shell script in execute is with bash.
+    # is to write the command in a temporary shell script and execute it with bash.
     CMD_FILE=$(mktemp)
     echo "$3" > "$CMD_FILE"
 
@@ -34,6 +34,9 @@ start_webshell sqlite 8883 'sqlite3 -safe'
 # Start oracle shell, sqlplus doesn't seem to use readline for interactive line editing, history etc, 
 # so we add it ourselves using rlwrap
 start_webshell oracle 8884 'rlwrap sqlplus $ORACLE_USER/$ORACLE_PASSWORD@$ORACLE_HOST:$ORACLE_PORT/$ORACLE_PDB'
+
+# Start MSSQL shell, using sqlcmd
+start_webshell mssql 8885 'sqlcmd -S $MSSQL_HOST -U SA -P $SA_PASSWORD'
 
 # Webshells run in background, only exit if all of them have died.
 wait

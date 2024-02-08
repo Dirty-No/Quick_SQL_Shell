@@ -38,4 +38,9 @@ server
         location /oracle/ {            
             proxy_pass http://butterfly:8884/oracle/;
         }
+
+        location /mssql/ {            
+            proxy_pass http://butterfly:8885/mssql/;
+        }
+
 }

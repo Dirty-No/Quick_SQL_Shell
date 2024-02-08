@@ -1,8 +1,22 @@
-# Butterfly
 FROM python
 
 # Install necessary packages
-RUN apt update && apt install postgresql-client mariadb-client sqlite3 sudo unzip libaio1 rlwrap -yqq 
+RUN apt update && apt install postgresql-client mariadb-client sqlite3 sudo unzip libaio1 rlwrap -yqq
+
+# Install Microsoft SQL Server command line tools
+# Import the public repository GPG keys
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+
+# Register the Microsoft SQL Server Ubuntu repository
+RUN curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+
+# Install SQL Server command line tools
+RUN apt update && ACCEPT_EULA=Y apt install -yqq msodbcsql17 mssql-tools unixodbc-dev
+
+# Make SQLCMD globally accessible
+ENV PATH=$PATH:/opt/mssql-tools/bin
+
+# Install Butterfly
 RUN pip install butterfly
 
 # Add a new user for SQLite
