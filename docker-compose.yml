@@ -53,6 +53,22 @@ services:
         - MSSQL_SA_PASSWORD=EJAZHEJZAHJEZ2193939219312@@@@dzadazd # Strong password is required, so I smashed my head on the keyboard
         - MSSQL_PID=Evaluation
 
+    db2:
+      image: ibmcom/db2
+      restart: unless-stopped
+
+      networks:
+        - no-internet
+      privileged: true
+      ports:
+        - "50000:50000"
+      expose:
+        - 50000
+      environment:
+        - LICENSE=accept
+        - DB2INST1_PASSWORD=VeryStr0ngP@ssword
+        - DBNAME=testdb
+
     butterfly:
         image: our_butterfly
         build: .
@@ -64,6 +80,8 @@ services:
           - 8882
           - 8883
           - 8884
+          - 8885
+          - 8886
         environment:
           - PGPASSWORD=postgres
           - PGHOST=postgres
@@ -82,6 +100,10 @@ services:
           - ORACLE_PDB=xe_pdb1
           - MSSQL_HOST=mssql
           - SA_PASSWORD=EJAZHEJZAHJEZ2193939219312@@@@dzadazd
+          - DB2_HOST=db2
+          - DB2_USER=db2inst1
+          - DB2_PASSWORD=VeryStr0ngP@ssword
+          - DB2_DATABASE=testdb
 
 
 

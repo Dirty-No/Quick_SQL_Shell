@@ -38,5 +38,8 @@ start_webshell oracle 8884 'rlwrap sqlplus $ORACLE_USER/$ORACLE_PASSWORD@$ORACLE
 # Start MSSQL shell, using sqlcmd
 start_webshell mssql 8885 'sqlcmd -S $MSSQL_HOST -U SA -P $SA_PASSWORD'
 
+# Start DB2 shell
+start_webshell db2 8886 'rlwrap jsqsh -d db2 -P $DB2_PASSWORD -D $DB2_DATABASE -U $DB2_USER -S $DB2_HOST -A'
+
 # Webshells run in background, only exit if all of them have died.
 wait

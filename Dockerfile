@@ -36,6 +36,19 @@ RUN mkdir -p /opt/oracle && \
 # Update PATH to include Oracle Instant Client/SQL*Plus
 ENV PATH=$PATH:/opt/oracle/instantclient_19_6
 
+
+
+# Setup db2 shell
+ADD https://github.com/scgray/jsqsh/releases/download/jsqsh-2.3/jsqsh-2.3-noarch.deb /tmp/jsqsh.deb
+RUN apt install -yqq /tmp/jsqsh.deb && rm /tmp/jsqsh.deb
+# Skip jsqsh setup
+RUN mkdir -p ~/.jsqsh && touch ~/.jsqsh/.welcome
+
+
+ADD https://repo1.maven.org/maven2/com/ibm/db2/jcc/db2jcc/db2jcc4/db2jcc-db2jcc4.jar /opt/db2/
+ENV CLASSPATH=$CLASSPATH:/opt/db2/db2jcc-db2jcc4.jar
+
+
 # Copy the init script into the image
 COPY init.sh /usr/local/bin/init.sh
 

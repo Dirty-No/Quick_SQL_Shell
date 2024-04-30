@@ -43,4 +43,8 @@ server
             proxy_pass http://butterfly:8885/mssql/;
         }
 
+        location /db2/ {
+            proxy_pass http://butterfly:8886/db2/;
+        }
+
 }
