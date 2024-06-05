@@ -19,5 +19,5 @@ You will be able to access the following routes:
 You can configure anything you need by editing docker-compose.yml and proxy/templates/default.conf
 
 ## Security:
-Containers are sandboxed using dedicated users and an isolated network, but as a security measure, you should probably not directly expose this on the internet.
+Containers are sandboxed using dedicated users and an isolated network, still, you should probably not directly expose this on the internet.
 
