@@ -12,6 +12,8 @@ You will be able to access the following routes:
 - /mysql
 - /postgres
 - /sqlite
+- /mssql
+- /db2
 
 You can configure anything you need by editing docker-compose.yml and proxy/templates/default.conf
 
