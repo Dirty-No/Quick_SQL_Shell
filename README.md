@@ -1,6 +1,6 @@
 
 # OnlineSQL
-Quickly get a MySQL/Postgres/SQLite web shell for testing purposes.
+Quickly get a MySQL,Postgres,SQLite,IBM DB2,SQL server web shell for testing purposes.
 
 ## Deploy:
 
